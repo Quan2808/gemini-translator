@@ -149,8 +149,9 @@
                 >
                 <textarea
                   id="inputText"
-                  class="form-control text-area"
+                  class="form-control text-area fs-5"
                   placeholder="Nhập văn bản bạn muốn dịch..."
+                  rows="4"
                 ></textarea>
               </div>
 
@@ -172,19 +173,25 @@
               </div>
 
               <!-- Result -->
-              <div id="resultArea" class="result-area" style="display: none">
-                <div
-                  class="d-flex justify-content-between align-items-center mb-3"
-                >
-                  <h5 class="mb-0">
-                    <i class="fas fa-check-circle text-success me-2"></i>Kết quả
-                    dịch:
+              <div class="card" id="resultArea" style="display: none">
+                <div class="card-body">
+                  <h5 class="card-title mb-0">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    Kết quả dịch
                   </h5>
-                  <button id="copyBtn" class="btn btn-sm btn-outline-primary">
+                  <div
+                    id="translatedText"
+                    class="card-text fs-5 mt-3 mb-3"
+                  ></div>
+                  <button
+                    id="copyBtn"
+                    type="button"
+                    class="btn btn-primary"
+                    data-mdb-ripple-init
+                  >
                     <i class="fas fa-copy me-1"></i>Sao chép
                   </button>
                 </div>
-                <div id="translatedText" class="fs-5"></div>
               </div>
             </div>
           </div>

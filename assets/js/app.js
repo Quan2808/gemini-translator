@@ -73,7 +73,6 @@ class GeminiTranslator {
   }
 
   showToast(message) {
-    // Tạo toast container nếu chưa có
     let toastWrapper = document.querySelector(".toast-container");
     if (!toastWrapper) {
       toastWrapper = document.createElement("div");
@@ -82,7 +81,6 @@ class GeminiTranslator {
       document.body.appendChild(toastWrapper);
     }
 
-    // Tạo phần tử toast
     const toast = document.createElement("div");
     toast.className = "toast fade";
     toast.setAttribute("role", "alert");
@@ -110,10 +108,8 @@ class GeminiTranslator {
     </div>
   `;
 
-    // Thêm toast vào wrapper
     toastWrapper.appendChild(toast);
 
-    // Khởi tạo và hiển thị
     requestAnimationFrame(() => {
       const instance = new mdb.Toast(toast);
       instance.show();
@@ -218,10 +214,6 @@ class GeminiTranslator {
     this.translatedText.textContent = result;
     this.resultArea.style.display = "block";
     this.resultArea.scrollIntoView({ behavior: "smooth" });
-  }
-
-  showError(message) {
-    alert(message);
   }
 
   showLoading(show) {

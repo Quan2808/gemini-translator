@@ -72,18 +72,76 @@ class GeminiTranslator {
     }
   }
 
+  showToast(message) {
+    // Tạo toast container nếu chưa có
+    let toastWrapper = document.querySelector(".toast-container");
+    if (!toastWrapper) {
+      toastWrapper = document.createElement("div");
+      toastWrapper.className = "toast-container position-fixed top-0 end-0 p-3";
+      toastWrapper.style.zIndex = "1080";
+      document.body.appendChild(toastWrapper);
+    }
+
+    // Tạo phần tử toast
+    const toast = document.createElement("div");
+    toast.className = "toast fade";
+    toast.setAttribute("role", "alert");
+    toast.setAttribute("aria-live", "assertive");
+    toast.setAttribute("aria-atomic", "true");
+    toast.setAttribute("data-mdb-autohide", "true");
+    toast.setAttribute("data-mdb-append-to-body", "true");
+    toast.setAttribute("data-mdb-delay", "4000");
+    toast.setAttribute("data-mdb-color", "danger");
+    toast.setAttribute("data-mdb-stacking", "true");
+
+    toast.innerHTML = `
+    <div class="toast-header">
+      <i class="fas fa-exclamation-circle fa-lg me-2"></i>
+      <strong class="me-auto">Thông báo</strong>
+      <button
+        type="button"
+        class="btn-close btn-close-white"
+        data-mdb-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      ${message}
+    </div>
+  `;
+
+    // Thêm toast vào wrapper
+    toastWrapper.appendChild(toast);
+
+    // Khởi tạo và hiển thị
+    requestAnimationFrame(() => {
+      const instance = new mdb.Toast(toast);
+      instance.show();
+    });
+  }
+
   async translate() {
     const text = this.inputTextArea.value.trim();
     const fromLang = this.fromLangSelect.value;
     const toLang = this.toLangSelect.value;
 
-    if (!text) {
-      this.showError("Vui lòng nhập văn bản cần dịch");
+    if (!this.apiKey) {
+      this.showToast("Vui lòng nhập Gemini API Key");
       return;
     }
 
-    if (!this.apiKey) {
-      this.showError("Vui lòng nhập Gemini API Key");
+    if (!text) {
+      this.showToast("Vui lòng nhập văn bản cần dịch");
+      return;
+    }
+
+    if (fromLang === toLang && fromLang !== "auto") {
+      this.showToast("Vui lòng chọn ngôn ngữ dịch khác nhau");
+      return;
+    }
+
+    if (toLang === "auto") {
+      this.showToast('Ngôn ngữ đích không thể là "Tự động phát hiện"');
       return;
     }
 
@@ -95,7 +153,7 @@ class GeminiTranslator {
       const result = await this.callGeminiApi(prompt);
       this.showResult(result);
     } catch (error) {
-      this.showError("Có lỗi xảy ra khi dịch: " + error.message);
+      this.showToast("Có lỗi xảy ra khi dịch: " + error.message);
     } finally {
       this.showLoading(false);
     }

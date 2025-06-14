@@ -132,12 +132,12 @@ class GeminiTranslator {
     }
 
     if (fromLang === toLang && fromLang !== "auto") {
-      this.showToast("Vui lòng chọn ngôn ngữ dịch khác nhau");
+      this.showToast("Vui lòng chọn ngôn ngữ dịch khác");
       return;
     }
 
     if (toLang === "auto") {
-      this.showToast('Ngôn ngữ đích không thể là "Tự động phát hiện"');
+      this.showToast('Ngôn ngữ dịch không thể là "Tự động phát hiện"');
       return;
     }
 

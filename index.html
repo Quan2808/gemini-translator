@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gemini Translator - Dịch Ngôn Ngữ Miễn Phí</title>
+
+    <meta
+      name="description"
+      content="Free AI language translator powered by Google Gemini"
+    />
+    <meta property="og:title" content="Gemini Translator" />
+    <meta
+      property="og:description"
+      content="Translate text between 13+ languages using AI"
+    />
+
+    <!-- MDB CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="assets/css/custom.css" />
+  </head>
+  <body>
+    <div class="container my-5">
+      <!-- Header -->
+      <div class="text-center mb-5">
+        <h1 class="display-4 text-white mb-3" style="font-weight: 650">
+          <i class="fas fa-language me-3"></i>Gemini Translator
+        </h1>
+
+        <p class="lead text-white-50">Dịch ngôn ngữ thông minh với AI Gemini</p>
+      </div>
+
+      <!-- API Key Input -->
+      <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+          <div class="card translator-card">
+            <div class="card-body">
+              <h5 class="card-title text-white mb-3">
+                <i class="fas fa-key me-2"></i>Cấu hình API Key
+              </h5>
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="apiKey"
+                  class="form-control api-key-input"
+                  placeholder="Nhập Gemini API Key của bạn..."
+                />
+                <button
+                  class="btn btn-outline-light"
+                  type="button"
+                  id="toggleApiKey"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <small class="text-white-50 mt-2 d-block">
+                <i class="fas fa-info-circle me-1"></i>
+                API Key được lưu trữ cục bộ và không được gửi đến server nào
+                khác
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Translator -->
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="card translator-card">
+            <div class="card-body p-4">
+              <!-- Language Selection -->
+              <div class="row mb-4">
+                <div class="col-md-5">
+                  <label class="form-label text-white fw-bold"
+                    >Từ ngôn ngữ:</label
+                  >
+                  <select id="fromLang" class="form-select language-select">
+                    <option value="auto">Tự động phát hiện</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="en">English</option>
+                    <option value="zh">中文 (Chinese)</option>
+                    <option value="ja">日本語 (Japanese)</option>
+                    <option value="ko">한국어 (Korean)</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="es">Español</option>
+                    <option value="ru">Русский</option>
+                    <option value="ar">العربية</option>
+                    <option value="th">ไทย</option>
+                    <option value="hi">हिन्दी</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 text-center">
+                  <button id="swapLang" class="swap-btn text-white mt-4">
+                    <i class="fas fa-exchange-alt"></i>
+                  </button>
+                </div>
+
+                <div class="col-md-5">
+                  <label class="form-label text-white fw-bold"
+                    >Sang ngôn ngữ:</label
+                  >
+                  <select id="toLang" class="form-select language-select">
+                    <option value="en">English</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="zh">中文 (Chinese)</option>
+                    <option value="ja">日本語 (Japanese)</option>
+                    <option value="ko">한국어 (Korean)</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="es">Español</option>
+                    <option value="ru">Русский</option>
+                    <option value="ar">العربية</option>
+                    <option value="th">ไทย</option>
+                    <option value="hi">हिन्दी</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Text Input -->
+              <div class="mb-4">
+                <label class="form-label text-white fw-bold"
+                  >Văn bản cần dịch:</label
+                >
+                <textarea
+                  id="inputText"
+                  class="form-control text-area"
+                  placeholder="Nhập văn bản bạn muốn dịch..."
+                ></textarea>
+              </div>
+
+              <!-- Translate Button -->
+              <div class="text-center mb-4">
+                <button id="translateBtn" class="btn btn-translate text-white">
+                  <i class="fas fa-language me-2"></i>Dịch ngay
+                </button>
+                <div class="loading mt-3">
+                  <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Đang dịch...</span>
+                  </div>
+                  <p class="text-white mt-2">Đang xử lý...</p>
+                </div>
+              </div>
+
+              <!-- Result -->
+              <div id="resultArea" class="result-area" style="display: none">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h5 class="mb-0">
+                    <i class="fas fa-check-circle text-success me-2"></i>Kết quả
+                    dịch:
+                  </h5>
+                  <button id="copyBtn" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-copy me-1"></i>Sao chép
+                  </button>
+                </div>
+                <div id="translatedText" class="fs-5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center mt-5">
+        <p class="text-white-50">
+          <i class="fas fa-heart text-danger me-1"></i>
+          Được phát triển với Gemini AI |
+          <a href="https://github.com" class="text-white text-decoration-none">
+            <i class="fab fa-github me-1"></i>GitHub
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <!-- MDB JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
